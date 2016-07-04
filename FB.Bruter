@@ -55,13 +55,13 @@ try:
 	os.system('clear');Display();print '%s '%Red
 	Email = raw_input('Enter Email: ');time.sleep(0.7)
 	if len(Email) is 0:
-		os.system('clear');print 'You Left Email Field Empty';time.sleep(0.7);sys.exit()
+		os.system('clear');print 'You Left Email Field Empty';time.sleep(3);sys.exit()
 
-	Passlist = raw_input('\nEnter Passlist: ');time.sleep(0.7)
+	Passlist = raw_input('\nEnter Passlist: ');time.sleep(3)
 	if len(Passlist) is 0:
-		os.system('clear');print 'You Left Password Field Empty';time.sleep(0.7);sys.exit()
+		os.system('clear');print 'You Left Password Field Empty';time.sleep(3);sys.exit()
 	if os.path.exists(Passlist) is False:
-		os.system('clear');print "Can't Open %s"%Passlist;time.sleep(0.7);sys.exit()
+		os.system('clear');print "Can't Open %s"%Passlist;time.sleep(3);sys.exit()
 except:
 	os.system('clear')
 	print '%s[%s!%s]%s Exiting...' %(Yellow,Red,Yellow,Red)
